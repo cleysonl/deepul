@@ -100,7 +100,8 @@ def load_q3_data():
 def visualize_q3_data():
     train_data, _ = load_q3_data()
     imgs = train_data.data[:100]
-    show_samples(imgs.permute(0, 2, 3, 1) * 255.0, title=f'CIFAR-10 Samples')
+    print(imgs.shape)
+    show_samples(imgs.transpose(0, 2, 3, 1) * 255.0, title=f'CIFAR-10 Samples')
 
 def plot_q3_supervised(pretrained_losses, random_losses, title, fname):
     plt.figure()

@@ -34,11 +34,11 @@ def q1_gan_plot(data, samples, xs, ys, title, fname):
 
 def q1_data(n=20000):
     assert n % 2 == 0
-    gaussian1 = np.random.normal(loc=-1, scale=0.03, size=(n//2,))
-    gaussian2 = np.random.normal(loc=1, scale=0.03, size=(n//2,))
+    gaussian1 = np.random.normal(loc=-1, scale=0.25, size=(n//2,))
+    gaussian2 = np.random.normal(loc=0.5, scale=0.5, size=(n//2,))
     data = (np.concatenate([gaussian1, gaussian2]) + 1).reshape([-1, 1])
     scaled_data = (data - np.min(data)) / (np.max(data) - np.min(data) + 1e-8)
-    return 2 * scaled_data - 1
+    return 2 * scaled_data -1
 
 def visualize_q1_dataset():
     data = q1_data()
@@ -66,7 +66,8 @@ def calculate_is(samples):
     return 0
 
 def load_q2_data():
-    train_data = torchvision.datasets.CIFAR10("./data", transform=torchvision.transforms.ToTensor())
+    train_data = torchvision.datasets.CIFAR10("./data", transform=torchvision.transforms.ToTensor(),
+                                              download=True, train=True)
     return train_data
 
 def visualize_q2_data():
@@ -93,7 +94,7 @@ def load_q3_data():
         transforms.Normalize((0.5,), (0.5,))
     ])
     train_data = torchvision.datasets.MNIST(root="./data", train=True, download=True, transform=transform)
-    test_data = torchvision.datasets.MNIST(root="./data", train=Test, download=True, transform=transform)
+    test_data = torchvision.datasets.MNIST(root="./data", train=False, download=True, transform=transform)
     return train_data, test_data
 
 def visualize_q3_data():

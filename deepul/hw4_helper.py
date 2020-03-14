@@ -73,7 +73,7 @@ def load_q2_data():
 def visualize_q2_data():
     train_data = load_q2_data()
     imgs = train_data.data[:100]
-    show_samples(imgs.transpose(0, 2, 3, 1) * 255.0, title=f'CIFAR-10 Samples')
+    show_samples(imgs, title=f'CIFAR-10 Samples')
 
 def q2_save_results(fn):
     train_data = load_q2_data()
@@ -100,7 +100,7 @@ def load_q3_data():
 def visualize_q3_data():
     train_data, _ = load_q3_data()
     imgs = train_data.data[:100]
-    show_samples(imgs.reshape([100, 28, 28, 1]) * 255.0, title=f'CIFAR-10 Samples')
+    show_samples(imgs.reshape([100, 28, 28, 1]) * 255.0, title=f'MNIST samples')
 
 def plot_q3_supervised(pretrained_losses, random_losses, title, fname):
     plt.figure()

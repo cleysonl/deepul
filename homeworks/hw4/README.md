@@ -1,4 +1,4 @@
-# Homework 3: Latent Variable Models
+# Homework 4: GANs
 
 **Due March 31, 11:59pm on Gradescope**
 

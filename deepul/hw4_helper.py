@@ -63,6 +63,7 @@ def q1_save_results(part, fn):
 ######################
 
 def calculate_is(samples):
+    print('Inception score module missing -- check back in 24 hours. ')
     return 0
 
 def load_q2_data():
@@ -123,3 +124,15 @@ def q3_save_results(fn):
     print('BiGAN final linear classification loss:', pretrained_losses[-1])
     print('Random encoder linear classification loss:', random_losses[-1])
 
+######################
+##### Question 4 #####
+######################
+
+def load_q4_data():
+    pass
+
+def visualize_cyclegan_datasets():
+    pass
+
+def q4_save_results(fn):
+    pass

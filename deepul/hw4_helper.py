@@ -77,7 +77,7 @@ def visualize_q2_data():
 
 def q2_save_results(fn):
     train_data = load_q2_data()
-
+    train_data = train_data.data.transpose((0, 3, 1, 2)) / 255.0
     train_losses, samples = fn(train_data)
 
     print("Inception score:", calculate_is(samples))
@@ -122,5 +122,4 @@ def q3_save_results(fn):
     show_samples(reconstructions * 255.0, nrow=20, fname='results/q3_reconstructions.png', title=f'BiGAN reconstructions')
     print('BiGAN final linear classification loss:', pretrained_losses[-1])
     print('Random encoder linear classification loss:', random_losses[-1])
-
 

@@ -52,11 +52,11 @@ def q1_save_results(part, fn):
     losses, samples1, xs1, ys1, samples_end, xs_end, ys_end = fn(data)
 
     # loss plot
-    plot_gan_training(losses, 'Q1{} Losses'.format(part), 'q1{}_losses.png'.format(part))
+    plot_gan_training(losses, 'Q1{} Losses'.format(part), 'results/q1{}_losses.png'.format(part))
 
     # samples
-    q1_gan_plot(data, samples1, xs1, ys1, 'Q1{} Epoch 1'.format(part), 'q1{}_epoch1.png'.format(part))
-    q1_gan_plot(data, samples_end, xs_end, ys_end, 'Q1{} Final'.format(part), 'q1{}_final.png'.format(part))
+    q1_gan_plot(data, samples1, xs1, ys1, 'Q1{} Epoch 1'.format(part), 'results/q1{}_epoch1.png'.format(part))
+    q1_gan_plot(data, samples_end, xs_end, ys_end, 'Q1{} Final'.format(part), 'results/q1{}_final.png'.format(part))
 
 ######################
 ##### Question 2 #####

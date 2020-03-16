@@ -1,17 +1,10 @@
 import numpy as np
-import torchvision
-import torchvision.transforms as transforms
-
-from .utils import *
-from .hw4_utils.hw4_models import GoogLeNet
-import torch.optim as optim
+import torch.nn as nn
 import torch.utils.data
-import torch.backends.cudnn as cudnn
 import torchvision
 from torchvision import transforms as transforms
-import numpy as np
-from scipy import linalg
-import torch.nn as nn
+from .utils import *
+from .hw4_utils.hw4_models import GoogLeNet
 
 
 CLASSES = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')

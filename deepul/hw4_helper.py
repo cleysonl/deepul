@@ -128,7 +128,7 @@ def q2_save_results(fn):
     train_data = train_data.data.transpose((0, 3, 1, 2)) / 255.0
     train_losses, samples = fn(train_data)
 
-    print("Inception score:", calculate_is(samples))
+    print("Inception score:", calculate_is(samples.transpose([0, 3, 1, 2])))
     plot_gan_training(train_losses, 'Q2 Losses', 'results/q2_losses.png')
     show_samples(samples[:100] * 255.0, fname='results/q2_samples.png', title=f'CIFAR-10 generated samples')
 

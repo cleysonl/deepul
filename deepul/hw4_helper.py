@@ -8,6 +8,7 @@ from .hw4_utils.hw4_models import GoogLeNet
 from PIL import Image as PILImage
 import scipy.ndimage
 import cv2
+from tensorflow.examples.tutorials.mnist import input_data
 
 CLASSES = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
@@ -177,9 +178,14 @@ def q3_save_results(fn):
 ##### Question 4 #####
 ######################
 
-def get_mnist():
-    train_data = torchvision.datasets.MNIST(root="./data", train=True, download=True)
-    return train_data.data.reshape([-1, 1, 28, 28]) / 255.0
+def load_mnist(num=None):
+    data = input_data.read_data_sets("mnist", one_hot=True).train.images
+    data = data.reshape(-1, 28, 28, 1).astype(np.float32)
+
+    if num is None:
+        return data
+    else:
+        return data[:num]
 
 def get_colored_mnist(data):
     # Read Lena image
@@ -210,9 +216,9 @@ def get_colored_mnist(data):
     return batch.transpose(0, 3, 1, 2)
 
 def load_q4_data():
-    mnist = get_mnist()
+    mnist = load_mnist()
     colored_mnist = get_colored_mnist(mnist)
-    return mnist, colored_mnist
+    return mnist.transpose(0, 3, 1, 2), colored_mnist
 
 def visualize_cyclegan_datasets():
     mnist, colored_mnist = load_q4_data()
@@ -222,4 +228,14 @@ def visualize_cyclegan_datasets():
     pass
 
 def q4_save_results(fn):
+    mnist_reconstructions = None
+    colored_mnist_reconstructions = None
+
+
+    show_samples(mnist_reconstructions * 255.0, nrow=20,
+                 fname='figures/q4_mnist.png',
+                 title=f'Source domain: MNIST')
+    show_samples(colored_mnist_reconstructions * 255.0, nrow=20,
+                 fname='figures/q4_colored_mnist.png',
+                 title=f'Source domain: Colored MNIST')
     pass

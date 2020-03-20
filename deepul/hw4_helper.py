@@ -178,16 +178,12 @@ def q3_save_results(fn):
 ##### Question 4 #####
 ######################
 
-def load_mnist(num=None):
+def load_mnist():
     data = input_data.read_data_sets("mnist", one_hot=True).train.images
-    data = data.reshape(-1, 28, 28, 1).astype(np.float32)
-
-    if num is None:
-        return data
-    else:
-        return data[:num]
+    return data.reshape(-1, 28, 28, 1).astype(np.float32)
 
 def get_colored_mnist(data):
+    # modified from https://www.wouterbulten.nl/blog/tech/getting-started-with-gans-2-colorful-mnist/
     # Read Lena image
     lena = PILImage.open('deepul/deepul/hw4_utils/lena.jpg')
 
@@ -225,12 +221,14 @@ def visualize_cyclegan_datasets():
     mnist, colored_mnist = mnist[:100], colored_mnist[:100]
     show_samples(mnist.reshape([100, 28, 28, 1]) * 255.0, title=f'MNIST samples')
     show_samples(colored_mnist.transpose([0, 2, 3, 1]) * 255.0, title=f'Colored MNIST samples')
-    pass
 
 def q4_save_results(fn):
-    mnist_reconstructions = None
-    colored_mnist_reconstructions = None
+    mnist, cmnist = load_q4_data()
 
+    m1, c1, m2, c2, m3, c3 = fn(mnist, cmnist)
+    m1, m2, m3 = m1.repeat(3, axis=2), m2.repeat(3, axis=2), m3.repeat(3, axis=2)
+    mnist_reconstructions = np.concatenate([m1, c1, m2], axis=0)
+    colored_mnist_reconstructions = np.concatenate([c2, m3, c3], axis=0)
 
     show_samples(mnist_reconstructions * 255.0, nrow=20,
                  fname='figures/q4_mnist.png',

@@ -226,7 +226,7 @@ def q4_save_results(fn):
     mnist, cmnist = load_q4_data()
 
     m1, c1, m2, c2, m3, c3 = fn(mnist, cmnist)
-    m1, m2, m3 = m1.repeat(3, axis=2), m2.repeat(3, axis=2), m3.repeat(3, axis=2)
+    m1, m2, m3 = m1.repeat(3, axis=3), m2.repeat(3, axis=3), m3.repeat(3, axis=3)
     mnist_reconstructions = np.concatenate([m1, c1, m2], axis=0)
     colored_mnist_reconstructions = np.concatenate([c2, m3, c3], axis=0)
 

@@ -5,7 +5,9 @@ import torchvision
 from torchvision import transforms as transforms
 from .utils import *
 from .hw4_utils.hw4_models import GoogLeNet
-
+from PIL import Image as PILImage
+import scipy.ndimage
+import cv2
 
 CLASSES = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
@@ -175,10 +177,48 @@ def q3_save_results(fn):
 ##### Question 4 #####
 ######################
 
+def get_mnist():
+    train_data = torchvision.datasets.MNIST(root="./data", train=True, download=True)
+    return train_data.data.reshape([-1, 1, 28, 28]) / 255.0
+
+def get_colored_mnist(data):
+    # Read Lena image
+    lena = PILImage.open('deepul/deepul/hw4_utils/lena.jpg')
+
+    # Resize
+    batch_resized = np.asarray([scipy.ndimage.zoom(image, (2.3, 2.3, 1), order=1) for image in data])
+
+    # Extend to RGB
+    batch_rgb = np.concatenate([batch_resized, batch_resized, batch_resized], axis=3)
+
+    # Make binary
+    batch_binary = (batch_rgb > 0.5)
+
+    batch = np.zeros((data.shape[0], 28, 28, 3))
+
+    for i in range(data.shape[0]):
+        # Take a random crop of the Lena image (background)
+        x_c = np.random.randint(0, lena.size[0] - 64)
+        y_c = np.random.randint(0, lena.size[1] - 64)
+        image = lena.crop((x_c, y_c, x_c + 64, y_c + 64))
+        image = np.asarray(image) / 255.0
+
+        # Invert the colors at the location of the number
+        image[batch_binary[i]] = 1 - image[batch_binary[i]]
+
+        batch[i] = cv2.resize(image, (0, 0), fx=28 / 64, fy=28 / 64, interpolation=cv2.INTER_AREA)
+    return batch.transpose(0, 3, 1, 2)
+
 def load_q4_data():
-    pass
+    mnist = get_mnist()
+    colored_mnist = get_colored_mnist(mnist)
+    return mnist, colored_mnist
 
 def visualize_cyclegan_datasets():
+    mnist, colored_mnist = load_q4_data()
+    mnist, colored_mnist = mnist[:100], colored_mnist[:100]
+    show_samples(mnist.reshape([100, 28, 28, 1]) * 255.0, title=f'MNIST samples')
+    show_samples(colored_mnist.transpose([0, 2, 3, 1]) * 255.0, title=f'Colored MNIST samples')
     pass
 
 def q4_save_results(fn):
